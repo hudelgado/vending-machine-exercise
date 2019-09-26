@@ -50,4 +50,4 @@ def load_sample():
 def load_sample_command():
   """Load initial products and changes sample data"""
   load_sample()
-  click.echo('Loaded sample data'.format())
+  click.echo('Loaded sample data')
