@@ -1,7 +1,7 @@
 import sqlite3, pytest, tempfile, os, json
 
 from vending_machine import create_app
-from vending_machine.db import get_db, init_db, load_sample
+from vending_machine.db import init_db, load_sample
 from vending_machine.models import Product
 from vending_machine.exceptions import ProductNotAvailable, NotEnoughMoney
 
@@ -13,7 +13,7 @@ def buy_product(client, code, change=[]):
     }),
     'content_type': 'application/json'
   }
-  return client.post('/api/buy', **params)
+  return client.post('/api/machine/buy', **params)
 
 def test_buy(client, app):
   with app.app_context():
