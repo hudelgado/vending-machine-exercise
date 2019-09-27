@@ -3,7 +3,7 @@ import tempfile
 
 import pytest
 from vending_machine import create_app
-from vending_machine.db import get_db, init_db, load_sample
+from vending_machine.db import init_db, load_sample
 
 @pytest.fixture
 def app():
