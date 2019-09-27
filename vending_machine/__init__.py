@@ -2,7 +2,11 @@ import os
 from flask import Flask, jsonify
 
 from .exceptions import NotEnoughMoney, ProductNotAvailable, NoChange
-from .common import handle_api_exception
+
+def handle_api_exception(error):
+  response = jsonify(error.to_dict())
+  response.status_code = error.status_code
+  return response
 
 def create_app(test_config=None):
   app = Flask(__name__)
