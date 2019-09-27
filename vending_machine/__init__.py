@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify
 
-from .exceptions import NotEnoughMoney, ProductNotAvailable
+from .exceptions import NotEnoughMoney, ProductNotAvailable, NoChange
 from .common import handle_api_exception
 
 def create_app(test_config=None):
@@ -28,6 +28,10 @@ def create_app(test_config=None):
 
   @app.errorhandler(ProductNotAvailable)
   def handle_product_not_available(error):
+    return handle_api_exception(error)
+
+  @app.errorhandler(NoChange)
+  def handle_no_change(error):
     return handle_api_exception(error)
 
   return app

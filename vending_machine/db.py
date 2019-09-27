@@ -30,13 +30,6 @@ def init_db():
   db = get_db()
   db.create_tables([Product, Coin])
 
-@click.command('init-db')
-@with_appcontext
-def init_db_command():
-  """Create new tables."""
-  init_db()
-  click.echo('Initialized the database.')
-
 def load_sample():
   from .config import INITIAL_CHANGES, INITIAL_PRODUCTS, CURRENCY, AVAILABLE_CURRENCIES
   currency = AVAILABLE_CURRENCIES[CURRENCY]
@@ -44,6 +37,13 @@ def load_sample():
     Coin.create(denomination=desc, quantity=qtd, value=currency[desc])
   for product in INITIAL_PRODUCTS:
     Product.create(**product)
+
+@click.command('init-db')
+@with_appcontext
+def init_db_command():
+  """Create new tables."""
+  init_db()
+  click.echo('Initialized the database.')
 
 @click.command('load-sample')
 @with_appcontext

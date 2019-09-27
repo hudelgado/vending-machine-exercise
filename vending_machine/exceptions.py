@@ -15,7 +15,16 @@ class BaseException(Exception):
     return rv
 
 class ProductNotAvailable(BaseException):
-  pass
+  def __init__(self, message=None, status_code=None, payload=None):
+    msg = 'Product not available' if message is None else message
+    BaseException.__init__(self, msg, 404, payload)
 
 class NotEnoughMoney(BaseException):
-  pass
+  def __init__(self, message=None, status_code=None, payload=None):
+    msg = 'Please insert more money' if message is None else message
+    BaseException.__init__(self, msg, 402, payload)
+
+class NoChange(BaseException):
+  def __init__(self, message=None, status_code=None, payload=None):
+    msg = 'No available change' if message is None else message
+    BaseException.__init__(self, msg, 503, payload)

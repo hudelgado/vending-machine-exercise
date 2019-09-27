@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 
-from .machine import VendingMachine
+from .dispenser import Dispenser
+from .exceptions import ProductNotAvailable
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -9,24 +10,29 @@ def buy_endpoint():
   """
     {'code': '1', 'change': ['1p']}
   """
-  machine = VendingMachine()
+  machine = Dispenser()
+  if not 'code' in request.json:
+    raise ProductNotAvailable()
+  elif not 'change' in request.json:
+    raise NotEnoughMoney()
   product = machine.buy(request.json['code'], request.json['change'])
   return jsonify(product)
 
-@bp.route('/products', methods=['POST'])
+@bp.route('/load_products', methods=['POST'])
 def products_endpoint():
   """
     [{'code': '1', 'quantity': 5}]
   """
-  machine = VendingMachine()
+  machine = Dispenser()
   products_loaded = machine.load_products(request.json)
   return jsonify(products_loaded)
 
-@bp.route('/coins', methods=['POST'])
+@bp.route('/load_coins', methods=['POST'])
 def coins_endpoint():
   """
     ['1p', '10p', '3p']
   """
+  machine = Dispenser()
   change_loaded = machine.load_coins(request.json)
   return jsonify(change_loaded)
 
