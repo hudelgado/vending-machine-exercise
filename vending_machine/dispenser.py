@@ -77,7 +77,7 @@ class Dispenser:
       List of dictionaries of the products to to restock
     """
 
-    self.store.reacharge(products)
+    return self.store.recharge(products)
 
   def load_coins(self, coins):
     """Restock the dispenser with coins
@@ -88,4 +88,4 @@ class Dispenser:
       List of strings of the coins denominations to restock
     """
 
-    self.wallet.recharge(coins)
+    return self.wallet.recharge(coins)
