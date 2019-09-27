@@ -13,7 +13,7 @@ def buy_product(client, code, change=[]):
     }),
     'content_type': 'application/json'
   }
-  return client.post('/api/machine/buy', **params)
+  return client.put('/api/machine/buy', **params)
 
 def test_buy(client, app):
   with app.app_context():
@@ -21,7 +21,7 @@ def test_buy(client, app):
     assert product.code == '4'
 
   request = buy_product(client, product.code, ['50p', '£1', '50p'])
-  assert request.status_code == 200  
+  assert request.status_code == 200
   reply = json.loads(request.data)
   assert reply['product'] == 'milk'
 
