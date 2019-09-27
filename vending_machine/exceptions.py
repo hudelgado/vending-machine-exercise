@@ -45,7 +45,7 @@ class ProductNotAvailable(BaseException):
     message : string, optional
       The message to return (default 'Product not available')
     status_code : int, optional
-      The status code to return (default 400)
+      The status code to return (default 404)
     payload : dict, optional
       Dictionary aditional details
     """
