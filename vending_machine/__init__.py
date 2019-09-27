@@ -19,8 +19,10 @@ def create_app(test_config=None):
   from .db import init_app
   init_app(app)
 
-  from .api import bp
-  app.register_blueprint(bp)
+  from vending_machine.machine import machine_bp
+  from vending_machine.service import service_bp
+  app.register_blueprint(machine_bp)
+  app.register_blueprint(service_bp)
 
   @app.errorhandler(NotEnoughMoney)
   def handle_not_enough_money(error):
