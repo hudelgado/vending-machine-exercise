@@ -16,6 +16,29 @@ from vending_machine.exceptions import ProductNotAvailable
 
 machine_bp = Blueprint('machine', __name__, url_prefix='/api/machine')
 
+@machine_bp.route('/list', methods=['GET'])
+def list_endpoint():
+  """Return the current machine products
+
+  response:
+    body: application/json
+    example: [{
+      "code": "1",
+      "name": "Soda",
+      "quantity": 5
+    }]
+  """
+
+  machine = Dispenser()
+  client_products = []
+  for product in machine.get_products():
+    client_products.append({
+      "code": product["code"],
+      "name": product["name"],
+      "quantity": product["quantity"],
+    })
+  return jsonify(client_products)
+
 @machine_bp.route('/buy', methods=['PUT'])
 def buy_endpoint():
   """Buy a product from the machine

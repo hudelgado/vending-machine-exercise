@@ -4,17 +4,10 @@ from vending_machine import create_app
 from vending_machine.db import get_db, init_db, load_sample
 from vending_machine.models import Product
 
-
 def test_get_close_db(app):
   with app.app_context():
     db = get_db()
     assert db is get_db()
-
-  # with pytest.raises(sqlite3.OperationalError) as e:
-  #   db.execute('SELECT 1')
-
-  # assert 'closed' in str(e.value)
-
 
 def test_init_db_command(runner, monkeypatch):
   class Recorder(object):

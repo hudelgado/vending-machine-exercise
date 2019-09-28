@@ -12,11 +12,3 @@ def test_dispenser_buy(app):
     result = machine.buy('2', ['50p'])
     assert result['product'] == 'juice'
     assert result['change'] == ['2p']
-
-
-
-def test_dispenser_load_products(app, client):
-  pass
-
-def test_dispenser_load_coins(app, client):
-  pass

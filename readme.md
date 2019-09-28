@@ -16,9 +16,19 @@ The API contains two endpoints. A machine module to perform the sales, and a ser
 
 ### Machine API `/api/machine`
 
+#### `GET /api/machine/list` - Return the current machine products
+
+Response: json
+```json
+[
+  { "code": "1", "name": "Soda", "price": 10 },
+  { "code": "2", "name": "Milk", "price": 45 }
+]
+```
+
 #### `PUT /api/machine/buy` - Buy a product from the machine
 
-Json body:
+Request body: json
 ```json
 {
   "code": "1",
@@ -28,22 +38,52 @@ Json body:
 
 ### Service `/api/service`
 
+#### `GET /api/service/get_products` - Return the current machine products
+
+Response: json
+```json
+[
+  { "code": "1", "name": "Soda", "quantity": 6, "price": 10 },
+  { "code": "2", "name": "Milk", "quantity": 1, "price": 45 }
+]
+```
+
+
 #### `PUT /api/service/load_products` - Recharge the machine with products
 
-Json body:
+Request body: json
 ```json
 [
   { "code": "1", "quantity": 6 },
-  { "code": "2", "quantity": 10 },
+  { "code": "new", "name": "new product", "price": 7, "quantity": 10 },
+]
+```
+Response:
+200 - True if success
+
+#### `GET /api/service/get_coins` - Return the current machine coins
+
+Response: json
+```json
+[
+  { "denomination": "1p", "quantity": 10},
+  { "denomination": "2p", "quantity": 3}
 ]
 ```
 
 #### `PUT /api/service/load_coins` - Recharge the machine with coins
 
-Json body:
+Request body: json
 ```json
-["1p", "1p", "2p"]
+[
+  {"denomination": "1p", "quantity": 5},
+  {"denomination": "2p", "quantity": 10}
+]
 ```
+
+Response:
+200 - True if success
+
 
 ## Install
 

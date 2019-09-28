@@ -41,3 +41,14 @@ def test_buy_product_no_change(client):
   print(request.data)
   reply = json.loads(request.data)
   assert reply['message'] == 'Please insert more money'
+
+
+def test_list_products(client):
+  request = client.get('/api/machine/list')
+
+  assert request.status_code == 200
+
+  request_products = json.loads(request.data)
+  machine_products = [p for p in Product.select()]
+
+  assert len(request_products) == len(machine_products)

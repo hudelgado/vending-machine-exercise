@@ -1,5 +1,6 @@
 import pytest
 from vending_machine.wallet import Wallet
+from vending_machine.models import Coin
 from vending_machine.exceptions import NoChange, NotEnoughMoney
 
 def test_wallet_init(app):
@@ -12,7 +13,7 @@ def test_wallet_recharge(app):
   with app.app_context():
     wallet = Wallet()
     prev_qtd = wallet.coins()[-1].quantity
-    assert wallet.recharge(['1p'])
+    assert wallet.recharge([{'denomination': '1p', 'quantity': 1}])
     final_qtd = wallet.coins()[-1].quantity
     assert prev_qtd + 1 == final_qtd
 
@@ -33,3 +34,12 @@ def test_wallet_not_enough_money(app):
       wallet.pay(5, ['1p'])
     assert e.value.status_code == 402
     assert 'Please insert more money' in e.value.message
+
+def test_get_coins(app):
+  with app.app_context():
+    wallet = Wallet()
+    wallet_coins = wallet.get_coins()
+
+    coins = [c for c in Coin.select()]
+
+    assert len(coins) == len(wallet_coins)

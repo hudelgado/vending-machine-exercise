@@ -68,6 +68,11 @@ class Dispenser:
       'product': self.store.dispense()
     }
 
+  def get_products(self):
+    """ Return the current machine products"""
+
+    return self.store.get_products()
+
   def load_products(self, products):
     """Restock the dispenser with products
 
@@ -78,6 +83,11 @@ class Dispenser:
     """
 
     return self.store.recharge(products)
+
+  def get_coins(self):
+    """Return the current machine coins"""
+
+    return self.wallet.get_coins()
 
   def load_coins(self, coins):
     """Restock the dispenser with coins

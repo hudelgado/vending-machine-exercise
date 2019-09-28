@@ -90,3 +90,12 @@ def test_recharge_invalid_quantity(app):
     res = store.recharge([{'quantity': -50, 'code': '1'}])
 
     assert res == True
+
+def test_get_products(app):
+  with app.app_context():
+    store = Store()
+    store_products = store.get_products()
+
+    products = [p for p in Product.select()]
+
+    assert len(products) == len(store_products)

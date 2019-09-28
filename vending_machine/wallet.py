@@ -17,7 +17,7 @@ class Wallet:
 
   Methods
   -------
-  coins()
+  get_coins()
     Retrieve the current coins in the wallet
   recharge(changes)
     Recharge the wallet with more coins
@@ -40,17 +40,24 @@ class Wallet:
 
     return [coin for coin in Coin.select().order_by(Coin.value.desc())]
 
+  def get_coins(self):
+    """Get a list of dictionaries with the current coins in the wallet"""
+
+    return [coin.to_dict() for coin in self.coins()]
+
   def recharge(self, coins):
     """Recharge the wallet with coins
 
     Parameters
     ----------
     coins : list
-      A strings list with the denominations of coins to add.
+      A list of coins with the denomination and the quantity to add.
     """
 
     for coin in coins:
-      Coin.update(quantity = Coin.quantity + 1).where(Coin.denomination == coin).execute()
+      denomination = coin["denomination"]
+      qtd = coin["quantity"]
+      Coin.update(quantity = Coin.quantity + qtd).where(Coin.denomination == denomination).execute()
     return True
 
   def pay(self, price, coins):

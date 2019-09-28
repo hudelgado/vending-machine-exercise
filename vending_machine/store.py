@@ -23,6 +23,8 @@ class Store:
     Return the currently selected product in the store
   recharge(products)
     Restock the store with products
+  get_products()
+    Return the current products in the store
   """
 
   selected = None
@@ -81,7 +83,7 @@ class Store:
     Parameters
     ----------
     products : list
-      List of dictionaries of the products to restock
+      List of the products to restock
     """
 
     for product in products:
@@ -97,3 +99,8 @@ class Store:
       except Product.DoesNotExist as e:
         Product.create(**product)
     return True
+
+  def get_products(self):
+    """List the current products in the store"""
+    products = [p.to_dict() for p in Product.select()]
+    return products
