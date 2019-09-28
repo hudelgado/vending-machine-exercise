@@ -1,7 +1,7 @@
 # The Vending Machine Exercise
 
 This application implements a vending machine to be used as a web API.
-It is implemented in Python 3 using Flask as a WSGI application and Peewee as the ORM with an sqlite3 db.
+It is implemented in Python 3 using Flask as a WSGI application and it uses Peewee as the ORM with an sqlite3 db.
 
 The machine functionalities are:
 
