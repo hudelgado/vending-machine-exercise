@@ -24,7 +24,7 @@ def load_products_endpoint():
 
   PUT:
     body: application/json
-    example: [{'code': '1', 'quantity': 5}]
+    example: [{"code": "1", "quantity": 5}]
     parameters:
       products : array
         An array of product dictionaries
@@ -48,7 +48,7 @@ def load_coins_endpoint():
 
   PUT:
     body: application/json
-    example: ['1p', '10p', '3p']
+    example: ["1p", "10p", "50p"]
     parameters: array
       An array of coin denominations
     responses:
