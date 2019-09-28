@@ -34,7 +34,7 @@ class Product(BaseModel):
   """
 
   code = CharField(unique=True)
-  name = CharField()
+  name = CharField(unique=True)
   price = IntegerField(constraints=[Check('price > 0')])
   quantity = IntegerField(default=0, constraints=[Check('quantity >= 0')])
 
@@ -51,6 +51,6 @@ class Coin(BaseModel):
   value : IntegerField
     The value of a coin, must be greater than 0
   """
-  denomination = CharField()
+  denomination = CharField(unique=True)
   quantity = IntegerField(default=0, constraints=[Check('quantity >= 0')])
   value = IntegerField(constraints=[Check('value > 0')])
