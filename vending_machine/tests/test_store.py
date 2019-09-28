@@ -1,4 +1,4 @@
-import pytest, sqlite3, peewee
+import pytest
 from vending_machine.store import Store
 from vending_machine.models import Product
 from vending_machine.exceptions import ProductNotAvailable
@@ -71,3 +71,22 @@ def test_recharge(app):
 
     assert store.recharge([{'quantity': 5, 'code': '1'}])
     assert store.select('1').quantity == prev_qtd + 5
+
+def test_recharge_new_products(app):
+  with app.app_context():
+    store = Store()
+    payload = [
+      {'quantity': 5, 'code': 'first', 'name': 'First', 'price': 10},
+      {'quantity': 10, 'code': 'second', 'name': 'Second', 'price': 8},
+    ]
+
+    assert store.recharge(payload)
+    assert store.select('first').quantity == 5
+    assert store.select('second').quantity == 10
+
+def test_recharge_invalid_quantity(app):
+  with app.app_context():
+    store = Store()
+    res = store.recharge([{'quantity': -50, 'code': '1'}])
+
+    assert res == True
