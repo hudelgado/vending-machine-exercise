@@ -1,10 +1,11 @@
 # The Vending Machine Exercise
 
-This application implements a vending machine as an API.
-It is implemented in Python 3 using Flask as a WSGI application and Peewee as the ORM with sqlite3.
+This application implements a vending machine to be used as a web API.
+It is implemented in Python 3 using Flask as a WSGI application and Peewee as the ORM with an sqlite3 db.
 
 The machine functionalities are:
 
+- List the available products with their name and price.
 - Buy products by inserting an amount of money.
 - Return change if too much money is provided.
 - Can be initially loaded with a set of products and coins.
@@ -12,7 +13,7 @@ The machine functionalities are:
 - Keeps track of the products and change that it contains.
 
 ## API
-The API contains two endpoints. A machine module to perform the sales, and a service module to recharge the machine.
+The machine API is divided into two api's, one for use by the customers to list and buy products, and a second one to be used by the service operators to list products and coins with their stocks and allow to reload the machine.
 
 ### Machine API `/api/machine`
 
