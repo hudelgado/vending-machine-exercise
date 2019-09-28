@@ -1,3 +1,4 @@
+import peewee
 from .models import Product
 from .exceptions import ProductNotAvailable
 
@@ -41,7 +42,12 @@ class Store:
     """
 
     try:
-      self.selected = Product.select().where(Product.code == code, Product.quantity > 0).get()
+      self.selected = (
+        Product
+        .select()
+        .where(Product.code == code, Product.quantity > 0)
+        .get()
+      )
       return self.selected
     except:
       raise ProductNotAvailable()
@@ -54,6 +60,7 @@ class Store:
     ProductNotAvailable
       If the product ran out of stock.
     """
+
     if not self.selected:
       return None
 
@@ -74,8 +81,19 @@ class Store:
     Parameters
     ----------
     products : list
-      List of dictionaries of the products to to restock
+      List of dictionaries of the products to restock
     """
+
     for product in products:
-      Product.update(quantity = Product.quantity + product['quantity']).where(Product.code == product['code']).execute()
+      if product['quantity'] <= 0:
+        continue
+      try:
+        product_to_update = (Product
+          .select()
+          .where(Product.code == product['code'])
+          .get())
+        product_to_update.quantity += product['quantity']
+        product_to_update.save(only=[Product.quantity])
+      except Product.DoesNotExist as e:
+        Product.create(**product)
     return True
